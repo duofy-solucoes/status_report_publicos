@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status Report — Grupo Decio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --blue:#1A3FA3;--blue-dark:#122E80;--blue-mid:#2451C8;
+  --green:#2ECC40;--green-dark:#22A832;
+  --white:#FFFFFF;--off-white:#F7F8FC;
+  --border:#DDE3F0;--muted:#8A96B0;--mid:#5A6680;--dark:#1A2240;
+  --fd:'Barlow Condensed',sans-serif;--fb:'Inter',sans-serif;
+  /* status */
+  --c-prog:#2168D6;   --bg-prog:#E7EFFC;
+  --c-valid:#92400E;  --bg-valid:#FEF3C7;
+  --c-watch:#0369A1;  --bg-watch:#E0F2FE;
+  --c-surv:#5B21B6;   --bg-surv:#EDE9FE;
+  --c-devol:#B5651D;  --bg-devol:#FBF0E2;
+  --c-ext:#6B7280;    --bg-ext:#EEEEF0;
+  --c-done:#065F46;   --bg-done:#D1FAE5;
+}
+html,body{background:var(--off-white);color:var(--dark);font-family:var(--fb);font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+
+/* HEADER */
+header{position:sticky;top:0;z-index:100;background:var(--blue);padding:0 40px;height:64px;display:flex;align-items:center;justify-content:space-between;box-shadow:0 2px 12px rgba(26,63,163,0.28);}
+.logo-group{display:flex;align-items:center;gap:20px;}
+.logo-decio{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.logo-icon{width:36px;height:36px;background:#fff;border-radius:8px;display:grid;place-items:center;}
+.logo-icon svg{width:22px;height:22px;}
+.logo-text{font-family:var(--fd);font-size:11px;font-weight:700;letter-spacing:0.12em;color:rgba(255,255,255,0.7);text-transform:uppercase;line-height:1;}
+.logo-text strong{display:block;font-size:20px;letter-spacing:0.04em;color:#fff;font-weight:800;}
+.divider-v{width:1px;height:28px;background:rgba(255,255,255,0.2);}
+.project-badge{font-family:var(--fd);font-size:15px;font-weight:700;letter-spacing:0.1em;color:#fff;text-transform:uppercase;background:rgba(255,255,255,0.12);padding:4px 12px;border-radius:4px;}
+.header-right{display:flex;align-items:center;gap:14px;}
+.btn-back{display:flex;align-items:center;gap:5px;font-size:12px;font-weight:600;color:rgba(255,255,255,0.75);text-decoration:none;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:6px;padding:5px 12px;transition:background .18s;}
+.btn-back:hover{background:rgba(255,255,255,0.2);color:#fff;}
+.btn-back svg{width:13px;height:13px;}
+.hd-sub{font-size:11px;color:rgba(255,255,255,0.45);letter-spacing:0.06em;text-transform:uppercase;}
+
+/* KPI STRIP */
+.kpi-wrap{background:#fff;border-bottom:1px solid var(--border);padding:20px 40px;}
+.kpi-strip{display:flex;gap:40px;flex-wrap:wrap;}
+.kpi{display:flex;align-items:baseline;gap:10px;}
+.kpi-n{font-family:var(--fd);font-size:48px;font-weight:800;color:var(--dark);line-height:1;}
+.kpi-info{display:flex;flex-direction:column;}
+.kpi-count{font-size:12px;font-weight:600;color:var(--mid);}
+.kpi-label{font-size:11px;color:var(--muted);}
+.kpi-bar{height:3px;width:100%;border-radius:2px;margin-top:10px;}
+.kpi-bar.orange{background:#F97316;}
+.kpi-bar.blue{background:var(--blue);}
+.kpi-bar.teal{background:#0D9488;}
+.kpi-bar.red{background:#DC2626;}
+.kpi-bar.gray{background:#9CA3AF;}
+
+/* TOOLBAR */
+.toolbar{background:#fff;border-bottom:1px solid var(--border);padding:14px 40px;display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
+.search-wrap{position:relative;min-width:180px;}
+.search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;color:var(--muted);}
+.search-wrap input{background:var(--off-white);border:1px solid var(--border);border-radius:8px;padding:7px 10px 7px 32px;font-size:13px;color:var(--dark);outline:none;font-family:var(--fb);width:100%;}
+.search-wrap input:focus{border-color:var(--blue-mid);}
+.filter-chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center;}
+.chip{font-size:12px;font-weight:500;padding:4px 12px;border-radius:20px;border:1px solid var(--border);background:#fff;color:var(--mid);cursor:pointer;transition:all .15s;display:flex;align-items:center;gap:5px;white-space:nowrap;}
+.chip-dot{width:7px;height:7px;border-radius:50%;}
+.chip.active{background:var(--dark);border-color:var(--dark);color:#fff;font-weight:600;}
+.chip:hover:not(.active){border-color:var(--muted);color:var(--dark);}
+.chip .cnt{font-size:11px;opacity:.7;}
+.group-tabs{display:flex;gap:0;border:1px solid var(--border);border-radius:6px;overflow:hidden;margin-left:auto;}
+.gtab{font-size:12px;font-weight:500;padding:5px 14px;background:#fff;color:var(--muted);cursor:pointer;border:none;transition:all .15s;}
+.gtab.active{background:var(--dark);color:#fff;font-weight:600;}
+.gtab:hover:not(.active){background:var(--off-white);}
+
+/* MAIN */
+main{max-width:1180px;margin:0 auto;padding:28px 40px;}
+
+/* SECTION */
+.section{margin-bottom:8px;}
+.section-hd{display:flex;align-items:center;gap:8px;padding:10px 14px;background:var(--off-white);border:1px solid var(--border);border-radius:6px 6px 0 0;margin-bottom:0;}
+.section-hd h3{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--muted);}
+.section-count{font-size:11px;color:var(--muted);margin-left:4px;}
+
+/* TABLE */
+.tbl{width:100%;border-collapse:collapse;background:#fff;border:1px solid var(--border);border-top:none;border-radius:0 0 6px 6px;overflow:hidden;margin-bottom:16px;}
+.tbl tbody tr{border-bottom:1px solid var(--border);transition:background .12s;cursor:pointer;}
+.tbl tbody tr:last-child{border-bottom:none;}
+.tbl tbody tr:hover{background:#F0F4FF;}
+.tbl tbody td{padding:11px 14px;vertical-align:middle;}
+
+.col-id{font-size:12px;color:var(--muted);width:40px;font-weight:500;}
+.col-caret{width:24px;color:var(--muted);}
+.col-item{font-size:13px;font-weight:600;color:var(--dark);min-width:180px;}
+.col-desc{font-size:13px;color:var(--mid);max-width:340px;}
+.col-cat{width:120px;}
+.col-status{width:150px;}
+.col-due{font-size:12px;color:var(--muted);width:140px;white-space:nowrap;}
+
+/* CATEGORY TAG */
+.cat-tag{font-size:11px;color:var(--muted);background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:2px 8px;white-space:nowrap;}
+
+/* STATUS BADGE */
+.badge{display:inline-flex;align-items:center;gap:5px;font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;}
+.badge-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
+.badge.prog{background:var(--bg-prog);color:var(--c-prog);}
+.badge.prog .badge-dot{background:var(--c-prog);}
+.badge.valid{background:var(--bg-valid);color:var(--c-valid);}
+.badge.valid .badge-dot{background:var(--c-valid);}
+.badge.watch{background:var(--bg-watch);color:var(--c-watch);}
+.badge.watch .badge-dot{background:var(--c-watch);}
+.badge.surv{background:var(--bg-surv);color:var(--c-surv);}
+.badge.surv .badge-dot{background:var(--c-surv);}
+.badge.devol{background:var(--bg-devol);color:var(--c-devol);}
+.badge.devol .badge-dot{background:var(--c-devol);}
+.badge.ext{background:var(--bg-ext);color:var(--c-ext);}
+.badge.ext .badge-dot{background:var(--c-ext);}
+.badge.done{background:var(--bg-done);color:var(--c-done);}
+.badge.done .badge-dot{background:var(--c-done);}
+
+/* DATE */
+.date-txt{font-size:12px;color:var(--muted);}
+.date-txt.soon{color:#92400E;}
+.date-txt.today{color:#DC2626;font-weight:600;}
+.no-date{font-size:12px;color:#C4C9D4;font-style:italic;}
+
+/* CARET */
+.caret{width:14px;height:14px;transition:transform .2s;display:block;}
+.caret.open{transform:rotate(90deg);}
+
+/* EXPAND */
+.expand-row{display:none;}
+.expand-row.open{display:table-row;}
+.expand-cell{padding:14px 14px 18px 52px;background:#F8F9FD;border-bottom:1px solid var(--border);}
+.expand-detail{font-size:13px;color:var(--mid);line-height:1.7;margin-bottom:12px;max-width:640px;}
+.expand-kvs{display:flex;gap:24px;flex-wrap:wrap;margin-bottom:12px;}
+.kv label{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;display:block;margin-bottom:2px;}
+.kv span{font-size:12px;color:var(--dark);}
+.sub-tbl{width:100%;border-collapse:collapse;border:1px solid var(--border);border-radius:6px;overflow:hidden;}
+.sub-tbl th{font-size:10px;color:var(--muted);text-transform:uppercase;letter-spacing:0.07em;padding:5px 10px;text-align:left;background:var(--off-white);border-bottom:1px solid var(--border);}
+.sub-tbl td{font-size:12px;color:var(--mid);padding:7px 10px;border-bottom:1px solid var(--border);}
+.sub-tbl tr:last-child td{border-bottom:none;}
+.sub-tbl td:first-child{font-family:monospace;color:var(--blue-mid);font-weight:600;}
+
+/* FOOTER */
+.footer-wrap{background:#fff;border-top:1px solid var(--border);margin-top:24px;}
+footer{max-width:1180px;margin:0 auto;padding:20px 40px;display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.fl{display:flex;align-items:center;gap:14px;}
+.fl img.fd{height:28px;border-radius:4px;}
+.fsep{width:1px;height:20px;background:var(--border);}
+.fp{background:var(--blue);border-radius:6px;padding:4px 10px;display:flex;align-items:center;}
+.fp img{height:18px;}
+.ft{font-size:11px;color:var(--muted);text-align:right;line-height:1.6;}
+
+@media(max-width:700px){
+  header{padding:0 16px;}main{padding:16px;}
+  .kpi-wrap{padding:16px;}
+  .toolbar{padding:12px 16px;}
+  .kpi-strip{gap:20px;}
+  .kpi-n{font-size:34px;}
+  footer{flex-direction:column;text-align:center;padding:16px;}
+  .ft{text-align:center;}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-group">
+    <a class="logo-decio" href="index.html">
+      <div class="logo-icon">
+        <svg viewBox="0 0 22 22" fill="none"><path d="M4 11C4 7.13 7.13 4 11 4s7 3.13 7 7-3.13 7-7 7-7-3.13-7-7z" fill="#1A3FA3"/><path d="M8 11c0-1.66 1.34-3 3-3s3 1.34 3 3-1.34 3-3 3-3-1.34-3-3z" fill="#2ECC40"/></svg>
+      </div>
+      <div class="logo-text">Grupo<strong>DECIO</strong></div>
+    </a>
+    <div class="divider-v"></div>
+    <span class="project-badge">Status Report</span>
+  </div>
+  <div class="header-right">
+    <a class="btn-back" href="index.html">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Portal
+    </a>
+    <span class="hd-sub">Jun 2026</span>
+  </div>
+</header>
+
+<!-- KPIs -->
+<div class="kpi-wrap">
+  <div class="kpi-strip">
+    <div>
+      <div class="kpi">
+        <span class="kpi-n" id="kpi-total">12</span>
+        <div class="kpi-info"><span class="kpi-count" id="kpi-done-sub">4 concluídos</span><span class="kpi-label">total de itens</span></div>
+      </div>
+      <div class="kpi-bar orange"></div>
+    </div>
+    <div>
+      <div class="kpi">
+        <span class="kpi-n" id="kpi-soon">01</span>
+        <div class="kpi-info"><span class="kpi-count">&nbsp;</span><span class="kpi-label">próximos 7 dias</span></div>
+      </div>
+      <div class="kpi-bar blue"></div>
+    </div>
+    <div>
+      <div class="kpi">
+        <span class="kpi-n" id="kpi-active">06</span>
+        <div class="kpi-info"><span class="kpi-count">&nbsp;</span><span class="kpi-label">execução ativa</span></div>
+      </div>
+      <div class="kpi-bar teal"></div>
+    </div>
+    <div>
+      <div class="kpi">
+        <span class="kpi-n" id="kpi-final">04</span>
+        <div class="kpi-info"><span class="kpi-count">&nbsp;</span><span class="kpi-label">finalizados</span></div>
+      </div>
+      <div class="kpi-bar gray"></div>
+    </div>
+    <div>
+      <div class="kpi">
+        <span class="kpi-n" id="kpi-overdue">00</span>
+        <div class="kpi-info"><span class="kpi-count">&nbsp;</span><span class="kpi-label">fora do prazo</span></div>
+      </div>
+      <div class="kpi-bar red"></div>
+    </div>
+  </div>
+</div>
+
+<!-- TOOLBAR -->
+<div class="toolbar">
+  <div class="search-wrap">
+    <svg viewBox="0 0 16 16" fill="none"><circle cx="6.5" cy="6.5" r="4" stroke="currentColor" stroke-width="1.4"/><path d="M11 11l2.5 2.5" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/></svg>
+    <input type="text" id="search" placeholder="Buscar item...">
+  </div>
+  <div class="filter-chips" id="filter-chips">
+    <button class="chip active" data-filter="all">Todos <span class="cnt" id="cnt-all">12</span></button>
+    <button class="chip" data-filter="prog"><span class="chip-dot" style="background:var(--c-prog)"></span>Em andamento <span class="cnt" id="cnt-prog">3</span></button>
+    <button class="chip" data-filter="valid"><span class="chip-dot" style="background:var(--c-valid)"></span>Em validação <span class="cnt" id="cnt-valid">2</span></button>
+    <button class="chip" data-filter="watch"><span class="chip-dot" style="background:var(--c-watch)"></span>Acompanhamento <span class="cnt" id="cnt-watch">1</span></button>
+    <button class="chip" data-filter="devol"><span class="chip-dot" style="background:var(--c-devol)"></span>Devolutiva nossa <span class="cnt" id="cnt-devol">0</span></button>
+    <button class="chip" data-filter="ext"><span class="chip-dot" style="background:var(--c-ext)"></span>Externo <span class="cnt" id="cnt-ext">1</span></button>
+    <button class="chip" data-filter="done"><span class="chip-dot" style="background:var(--c-done)"></span>Concluído <span class="cnt" id="cnt-done">4</span></button>
+  </div>
+  <div class="group-tabs" id="group-tabs">
+    <button class="gtab active" data-group="urgency">Urgência</button>
+    <button class="gtab" data-group="status">Status</button>
+    <button class="gtab" data-group="category">Categoria</button>
+  </div>
+</div>
+
+<main id="main-content"></main>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <footer>
+    <div class="fl">
+      <img class="fd" src="Logo_Decio.png" alt="Grupo Decio">
+      <div class="fsep"></div>
+      <div class="fp"><img src="Logo_Duofy_branca.png" alt="Duofy"></div>
+    </div>
+    <div class="ft">© 2026 Grupo Decio · Todos os direitos reservados<br>Transformação Digital · Duofy × Decio · Documento vivo</div>
+  </footer>
+</div>
+
+<script>
+const REPORT_DATE = new Date('2026-06-20');
+
+// status: prog | valid | watch | surv | devol | ext | done
+const DATA = [
+  {id:'01', item:'Integração Ducha Evo',          desc:'Integração concluída.',                                      cat:'Integrações',    status:'done', due:null,
+   detail:'Integração com o sistema Ducha Evo finalizada e em produção.',subs:[]},
+  {id:'02', item:'Concentradora Synergy',          desc:'Aguardando agenda com Posto Gestor.',                        cat:'Integrações',    status:'ext',  due:null,
+   detail:'Dependente de agenda com equipe externa do Posto Gestor para continuidade.',subs:[]},
+  {id:'03', item:'Totem de Pagamento',             desc:'Em validação com o cliente.',                               cat:'Pagamentos',     status:'valid',due:null,
+   detail:'Protótipo entregue, aguardando aprovação do cliente para prosseguir com o desenvolvimento.',subs:[
+     {n:'01',d:'UX aprovada',ticket:'#301',sprint:'S2',status:'done'},
+     {n:'02',d:'Backend integração',ticket:'#302',sprint:'S3',status:'plan'},
+   ]},
+  {id:'04', item:'Carga de Dados — Posto Decio Piranhas', desc:'Concluído.',                                         cat:'Infraestrutura', status:'done', due:null,
+   detail:'Carga de dados históricos do Posto Decio Piranhas finalizada com sucesso.',subs:[]},
+  {id:'05', item:'PDV Móvel V2',                   desc:'Em validação. Pontos levantados pelo Getúlio em análise.',  cat:'PDV',           status:'valid',due:null,
+   detail:'Segunda versão do PDV Móvel em processo de validação. Pontos de melhoria identificados por Getúlio estão sendo analisados.',subs:[
+     {n:'01',d:'Levantamento de melhorias',ticket:'#501',sprint:'S2',status:'prog'},
+     {n:'02',d:'Correções V2.1',ticket:'#502',sprint:'S3',status:'plan'},
+   ]},
+  {id:'06', item:'Cartões Frota',                  desc:'Proposta assinada. Recolhas autônomas em execução por sprint.', cat:'Pagamentos',  status:'prog', due:null,
+   owner:'Time interno', detail:'Proposta assinada pelo cliente. Item liberado para execução, com as recolhas autônomas organizadas em sprints de junho e julho.',
+   subs:[
+     {n:'01',d:'ValeCard (Recolha Autônoma)',  ticket:'#202604000727', sprint:'Jun · Sprint 1', status:'prog'},
+     {n:'02',d:'ProFrota (Recolha Autônoma)', ticket:'#202603000205', sprint:'Jun · Sprint 2', status:'prog'},
+     {n:'03',d:'Gasola (Recolha Autônoma)',   ticket:'#202603000184', sprint:'Jul · Sprint 1', status:'plan'},
+     {n:'04',d:'X7 (Recolha Autônoma)',       ticket:'#202603000177', sprint:'Jul · Sprint 1', status:'plan'},
+     {n:'05',d:'RedeFrota (Recolha Autônoma)',ticket:'#202603000183', sprint:'Jul · Sprint 2', status:'plan'},
+   ]},
+  {id:'07', item:'Assinatura Digital — Nota a Prazo', desc:'Em andamento. 3 entregas escalonadas entre jun–ago.',   cat:'PDV',           status:'prog', due:'2026-06-30',
+   owner:'Time interno', detail:'Pacote de melhorias para Nota a Prazo em execução, com três entregas sequenciais. Primeira entrega prevista para 30/06.',
+   subs:[
+     {n:'01',d:'Assinatura Digital no PDV com dispositivo Wacom', ticket:null, sprint:'30 jun · em 14d', status:'prog'},
+     {n:'02',d:'Anexo de Arquivos da venda no PDV',               ticket:null, sprint:'31 jul · em 45d', status:'plan'},
+     {n:'03',d:'Faturamento Automático',                          ticket:null, sprint:'31 ago · em 76d', status:'plan'},
+     {n:'04',d:'Portal do Cliente',                               ticket:null, sprint:'31 ago · em 76d', status:'plan'},
+   ]},
+  {id:'08', item:'Report de Lentidão — Unidade Rio Verde', desc:'Concluído. Em acompanhamento da unidade.',          cat:'Infraestrutura', status:'watch',due:null,
+   detail:'Relatório de lentidão entregue. Equipe da unidade Rio Verde em monitoramento da performance após ajustes realizados.',subs:[]},
+  {id:'09', item:'Truckpag',                       desc:'Projeto concluído.',                                        cat:'Integrações',   status:'done', due:null,
+   detail:'Integração Truckpag concluída e homologada.',subs:[]},
+  {id:'10', item:'Melhoria comercial',             desc:'Concluído.',                                                cat:'Comercial',     status:'done', due:null,
+   detail:'Melhorias no módulo comercial entregues e validadas pela equipe Decio.',subs:[]},
+  {id:'11', item:'Desconto Aprovado — App Gestor', desc:'Desconto aprovado no App Gestor. Em andamento.',           cat:'Integrações',   status:'prog', due:'2026-06-20',
+   detail:'Funcionalidade de aprovação de descontos diretamente no App Gestor em desenvolvimento.',
+   subs:[
+     {n:'01',d:'Fluxo de aprovação',ticket:'#1101',sprint:'S1',status:'done'},
+     {n:'02',d:'Notificações push',ticket:'#1102',sprint:'S2',status:'prog'},
+   ]},
+  {id:'12', item:'Frente de Posto 360',            desc:'Em levantamento de requisitos e escopo.',                   cat:'Estratégia',    status:'surv', due:null,
+   detail:'Levantamento completo dos módulos do Posto 360: orçamento eletrônico, KingPosto móvel/fixo, app gestor e totem de autoatendimento.',
+   subs:[]},
+];
+
+const STATUS_LABEL = {prog:'Em andamento',valid:'Em validação',watch:'Em acompanhamento',surv:'Em levantamento',devol:'Devolutiva nossa',ext:'Aguardando externo',done:'Concluído'};
+
+function urgencyGroup(item) {
+  if(item.status==='done') return 'CONCLUÍDO';
+  if(!item.due) return 'EM ANDAMENTO';
+  const d = new Date(item.due);
+  const diff = Math.round((d - REPORT_DATE)/86400000);
+  if(diff <= 0) return 'ATRASADO';
+  if(diff <= 7) return 'ESTA SEMANA';
+  if(diff <= 31) return 'ESTE MÊS';
+  return 'PRÓXIMOS MESES';
+}
+
+const GROUP_ORDER_URGENCY = ['ATRASADO','ESTA SEMANA','ESTE MÊS','PRÓXIMOS MESES','EM ANDAMENTO','CONCLUÍDO'];
+
+function dateText(iso) {
+  if(!iso) return '';
+  const d = new Date(iso);
+  const diff = Math.round((d - REPORT_DATE)/86400000);
+  const fmt = d.toLocaleDateString('pt-BR',{day:'2-digit',month:'short'});
+  let rel = diff===0?'hoje':diff===1?'amanhã':diff<0?`há ${Math.abs(diff)}d`:`em ${diff}d`;
+  let cls = diff<=0?'today':diff<=5?'soon':'';
+  return `<span class="date-txt ${cls}">${fmt} · ${rel}</span>`;
+}
+
+function badge(s) {
+  return `<span class="badge ${s}"><span class="badge-dot"></span>${STATUS_LABEL[s]||s}</span>`;
+}
+
+function renderRow(item) {
+  const expandable = (item.id === '06' || item.id === '07');
+  const hasSubs = item.subs && item.subs.length > 0;
+  const expandId = 'exp-' + item.id;
+
+  const subStatusLabel = {prog:'Em andamento', plan:'Planejado', done:'Concluido', valid:'Em validacao'};
+  const subStatusStyle = {
+    prog:'background:#EEF2FF;color:#4338CA;',
+    plan:'background:#EDE9FE;color:#6D28D9;',
+    done:'background:#D1FAE5;color:#065F46;',
+    valid:'background:#FEF3C7;color:#92400E;',
+  };
+
+  let subsHtml = '';
+  if (hasSubs && expandable) {
+    let rows = '';
+    item.subs.forEach(function(s) {
+      const ticketHtml = s.ticket
+        ? '<span style="font-size:11px;font-family:monospace;background:var(--off-white);border:1px solid var(--border);border-radius:4px;padding:2px 7px;color:var(--mid);">' + s.ticket + '</span>'
+        : '';
+      const stStyle = subStatusStyle[s.status] || 'background:#F3F4F6;color:#6B7280;';
+      const stLabel = subStatusLabel[s.status] || s.status;
+      rows += '<div style="display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border);font-size:13px;">'
+            + '<span style="font-size:11px;color:var(--muted);width:22px;flex-shrink:0;">' + s.n + '</span>'
+            + '<span style="flex:1;color:var(--dark);font-weight:500;">' + s.d + '</span>'
+            + ticketHtml
+            + '<span style="font-size:12px;color:var(--muted);white-space:nowrap;min-width:120px;text-align:right;">' + s.sprint + '</span>'
+            + '<span style="font-size:12px;font-weight:500;padding:3px 10px;border-radius:20px;white-space:nowrap;display:inline-flex;align-items:center;gap:5px;' + stStyle + '">'
+            + '<span style="width:7px;height:7px;border-radius:50%;background:currentColor;display:inline-block;opacity:.8;"></span>'
+            + stLabel + '</span>'
+            + '</div>';
+    });
+    subsHtml = '<div style="margin-top:14px;display:flex;flex-direction:column;gap:0;border:1px solid var(--border);border-radius:8px;overflow:hidden;background:#fff;">' + rows + '</div>';
+  }
+
+  const caretHtml = expandable
+    ? '<td class="col-caret"><svg class="caret" viewBox="0 0 16 16" fill="none"><path d="M6 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></td>'
+    : '<td class="col-caret"></td>';
+
+  let html = '<tr' + (expandable ? ' onclick="toggle(\'' + expandId + '\',this)" style="cursor:pointer;"' : '') + '>'
+    + caretHtml
+    + '<td class="col-id">' + item.id + '</td>'
+    + '<td class="col-item">' + item.item + '</td>'
+    + '<td class="col-desc">' + item.desc + '</td>'
+    + '<td class="col-cat"><span class="cat-tag">' + item.cat + '</span></td>'
+    + '<td class="col-status">' + badge(item.status) + '</td>'
+    + '<td class="col-due">' + dateText(item.due) + '</td>'
+    + '</tr>';
+
+  if (expandable) {
+    const prazo = item.due ? new Date(item.due).toLocaleDateString('pt-BR',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+    html += '<tr class="expand-row" id="' + expandId + '">'
+      + '<td class="expand-cell" colspan="7">'
+      + '<div class="expand-detail">' + item.detail + '</div>'
+      + '<div class="expand-kvs">'
+      + '<div class="kv"><label>Categoria</label><span>' + item.cat + '</span></div>'
+      + '<div class="kv"><label>Status</label><span>' + (STATUS_LABEL[item.status] || item.status) + '</span></div>'
+      + '<div class="kv"><label>Prazo</label><span style="font-family:monospace;">' + prazo + '</span></div>'
+      + '<div class="kv"><label>ID</label><span style="font-family:monospace;color:var(--blue-mid)">DEC-' + String(item.id).padStart(2,'0') + '</span></div>'
+      + '</div>'
+      + subsHtml
+      + '</td></tr>';
+  }
+
+  return html;
+}
+function toggle(id, tr) {
+  const row = document.getElementById(id);
+  const caret = tr.querySelector('.caret');
+  const isOpen = row.classList.contains('open');
+  document.querySelectorAll('.expand-row.open').forEach(r=>r.classList.remove('open'));
+  document.querySelectorAll('.caret.open').forEach(c=>c.classList.remove('open'));
+  if(!isOpen){row.classList.add('open');caret.classList.add('open');}
+}
+
+function groupBy(items, mode) {
+  if(mode==='urgency') {
+    const map = {};
+    GROUP_ORDER_URGENCY.forEach(k=>{map[k]=[];});
+    items.forEach(i=>{const g=urgencyGroup(i);if(map[g])map[g].push(i);});
+    return GROUP_ORDER_URGENCY.map(k=>([k, map[k]])).filter(([,v])=>v.length>0);
+  }
+  if(mode==='status') {
+    const map = {};
+    items.forEach(i=>{const k=STATUS_LABEL[i.status]||i.status;if(!map[k])map[k]=[];map[k].push(i);});
+    return Object.entries(map);
+  }
+  if(mode==='category') {
+    const map = {};
+    items.forEach(i=>{if(!map[i.cat])map[i.cat]=[];map[i.cat].push(i);});
+    return Object.entries(map);
+  }
+  return [['Todos', items]];
+}
+
+function updateCounts(items) {
+  const counts = {all:0,prog:0,valid:0,watch:0,surv:0,devol:0,ext:0,done:0};
+  items.forEach(i=>{counts.all++;counts[i.status]=(counts[i.status]||0)+1;});
+  ['all','prog','valid','watch','surv','devol','ext','done'].forEach(k=>{
+    const el=document.getElementById('cnt-'+k);
+    if(el) el.textContent=counts[k]||0;
+  });
+}
+
+function render() {
+  const search = document.getElementById('search').value.toLowerCase();
+  const filter = document.querySelector('.chip.active').dataset.filter;
+  const group  = document.querySelector('.gtab.active').dataset.group;
+
+  const items = DATA.filter(i=>{
+    const ms = !search || i.item.toLowerCase().includes(search)||i.desc.toLowerCase().includes(search)||i.cat.toLowerCase().includes(search);
+    const mf = filter==='all' || i.status===filter;
+    return ms && mf;
+  });
+
+  updateCounts(DATA);
+
+  const grouped = groupBy(items, group);
+  document.getElementById('main-content').innerHTML = grouped.map(([grp, gitems])=>`
+    <div class="section">
+      <div class="section-hd"><h3>${grp}</h3><span class="section-count">${gitems.length} ${gitems.length===1?'item':'itens'}</span></div>
+      <table class="tbl"><tbody>${gitems.map(renderRow).join('')}</tbody></table>
+    </div>`).join('');
+}
+
+document.getElementById('search').addEventListener('input', render);
+document.getElementById('filter-chips').addEventListener('click', e=>{
+  const c=e.target.closest('.chip');if(!c)return;
+  document.querySelectorAll('.chip').forEach(x=>x.classList.remove('active'));
+  c.classList.add('active');render();
+});
+document.getElementById('group-tabs').addEventListener('click', e=>{
+  const t=e.target.closest('.gtab');if(!t)return;
+  document.querySelectorAll('.gtab').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');render();
+});
+
+render();
+</script>
+</body>
+</html>

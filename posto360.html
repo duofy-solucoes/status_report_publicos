@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Posto 360 – Duofy × Decio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --blue:       #1A3FA3;
+    --blue-dark:  #122E80;
+    --blue-mid:   #2451C8;
+    --blue-light: #EBF0FB;
+    --blue-glow:  rgba(26,63,163,0.15);
+    --green:      #2ECC40;
+    --green-dark: #22A832;
+    --white:      #FFFFFF;
+    --off-white:  #F7F8FC;
+    --border:     #DDE3F0;
+    --muted:      #8A96B0;
+    --mid:        #5A6680;
+    --dark:       #1A2240;
+    --done:       #2ECC40;
+    --pending:    #F59E0B;
+    --active-bg:  rgba(26,63,163,0.08);
+    --tbd:        #94A3B8;
+    --font-display: 'Barlow Condensed', sans-serif;
+    --font-body:    'Inter', sans-serif;
+  }
+
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--off-white);
+    color: var(--dark);
+    font-family: var(--font-body);
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* ── HEADER ─────────────────────────────────────────────── */
+  header {
+    position: sticky; top: 0; z-index: 100;
+    background: var(--blue);
+    padding: 0 48px;
+    display: flex; align-items: center; justify-content: space-between;
+    height: 64px;
+    box-shadow: 0 2px 12px rgba(26,63,163,0.25);
+  }
+  .logo-group { display: flex; align-items: center; gap: 20px; }
+  .logo-decio {
+    display: flex; align-items: center; gap: 10px;
+    text-decoration: none;
+  }
+  .logo-icon {
+    width: 36px; height: 36px;
+    background: var(--white);
+    border-radius: 8px;
+    display: grid; place-items: center;
+  }
+  .logo-icon svg { width: 22px; height: 22px; }
+  .logo-text {
+    font-family: var(--font-display);
+    font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+    color: rgba(255,255,255,0.7); text-transform: uppercase;
+    line-height: 1;
+  }
+  .logo-text strong {
+    display: block; font-size: 20px; letter-spacing: 0.04em;
+    color: var(--white); font-weight: 800;
+  }
+  .divider-v { width: 1px; height: 28px; background: rgba(255,255,255,0.2); }
+  .project-badge {
+    font-family: var(--font-display);
+    font-size: 15px; font-weight: 700; letter-spacing: 0.1em;
+    color: var(--white); text-transform: uppercase;
+    background: rgba(255,255,255,0.12);
+    padding: 4px 12px; border-radius: 4px;
+  }
+  .header-right {
+    font-size: 12px; color: rgba(255,255,255,0.55); letter-spacing: 0.05em;
+    text-transform: uppercase; display: flex; align-items: center; gap: 16px;
+  }
+  .btn-back {
+    display: flex; align-items: center; gap: 6px;
+    font-size: 12px; font-weight: 600; color: rgba(255,255,255,0.75);
+    text-decoration: none; letter-spacing: 0.04em;
+    background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 6px; padding: 5px 12px;
+    transition: background .18s, color .18s;
+  }
+  .btn-back:hover { background: rgba(255,255,255,0.18); color: #fff; }
+  .btn-back svg { width: 14px; height: 14px; }
+
+  /* ── HERO ────────────────────────────────────────────────── */
+  .hero-wrap {
+    background: linear-gradient(135deg, var(--blue) 0%, var(--blue-mid) 60%, #3468E8 100%);
+    position: relative; overflow: hidden;
+  }
+  .hero-wrap::after {
+    content: '';
+    position: absolute; right: -80px; top: -80px;
+    width: 500px; height: 500px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.04);
+    pointer-events: none;
+  }
+  .hero {
+    padding: 80px 48px 72px;
+    max-width: 1200px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr auto; gap: 48px; align-items: center;
+    position: relative; z-index: 1;
+  }
+  .hero-eyebrow {
+    font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--green); margin-bottom: 18px;
+    display: flex; align-items: center; gap: 10px; font-weight: 600;
+  }
+  .hero-eyebrow::before {
+    content: ''; display: block; width: 24px; height: 2px; background: var(--green);
+  }
+  h1 {
+    font-family: var(--font-display);
+    font-size: clamp(52px, 7vw, 88px);
+    font-weight: 800; line-height: 0.92;
+    letter-spacing: 0.01em; color: var(--white);
+  }
+  h1 em { color: var(--green); font-style: normal; }
+  .hero-sub {
+    margin-top: 22px;
+    font-size: 16px; color: rgba(255,255,255,0.72); max-width: 500px; line-height: 1.7;
+  }
+  .collab-tag {
+    font-size: 12px; color: rgba(255,255,255,0.45); letter-spacing: 0.08em;
+    text-transform: uppercase; margin-top: 28px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .collab-tag span { color: rgba(255,255,255,0.8); font-weight: 600; }
+  .collab-tag .x { color: var(--green); }
+
+  .hero-stats { display: flex; flex-direction: column; gap: 14px; }
+  .stat-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 10px; padding: 20px 28px; text-align: right; min-width: 150px;
+    backdrop-filter: blur(8px);
+  }
+  .stat-num {
+    font-family: var(--font-display); font-size: 42px; font-weight: 800;
+    color: var(--white); line-height: 1;
+  }
+  .stat-num.green { color: var(--green); }
+  .stat-label { font-size: 11px; color: rgba(255,255,255,0.5); margin-top: 4px; letter-spacing: 0.08em; text-transform: uppercase; }
+
+  /* ── GREEN STRIPE ────────────────────────────────────────── */
+  .stripe {
+    height: 5px;
+    background: linear-gradient(90deg, var(--green) 0%, var(--green-dark) 100%);
+  }
+
+  /* ── SECTION HEADERS ─────────────────────────────────────── */
+  .section-wrap { max-width: 1200px; margin: 0 auto; padding: 64px 48px; }
+  .section-header {
+    display: flex; align-items: baseline; gap: 16px; margin-bottom: 32px;
+    padding-bottom: 16px; border-bottom: 2px solid var(--border);
+  }
+  .section-header h2 {
+    font-family: var(--font-display);
+    font-size: 30px; font-weight: 800; letter-spacing: 0.04em; color: var(--blue);
+  }
+  .section-header .count {
+    font-size: 12px; color: var(--muted); letter-spacing: 0.06em; text-transform: uppercase;
+  }
+
+  /* ── RF SECTION ─────────────────────────────────────────── */
+  .rf-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 20px;
+  }
+  .rf-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; overflow: hidden;
+    transition: box-shadow 0.2s, transform 0.2s;
+  }
+  .rf-card:hover { box-shadow: 0 8px 32px rgba(26,63,163,0.12); transform: translateY(-2px); }
+  .rf-card-header {
+    background: var(--blue); padding: 14px 20px;
+    display: flex; align-items: center; gap: 12px;
+  }
+  .rf-card-header.green  { background: #16803a; }
+  .rf-card-header.teal   { background: #0e7490; }
+  .rf-card-header.indigo { background: #4338ca; }
+  .rf-card-header.violet { background: #6d28d9; }
+  .rf-card-header.rose   { background: #be123c; }
+  .rf-icon {
+    width: 32px; height: 32px; border-radius: 8px;
+    background: rgba(255,255,255,0.15);
+    display: grid; place-items: center; flex-shrink: 0;
+    font-size: 16px;
+  }
+  .rf-card-title {
+    font-family: var(--font-display);
+    font-size: 17px; font-weight: 700; color: var(--white); line-height: 1.1;
+  }
+  .rf-card-sub {
+    font-size: 10px; color: rgba(255,255,255,0.6);
+    letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px;
+  }
+  .rf-body { padding: 16px 20px; }
+  .rf-group { margin-bottom: 14px; }
+  .rf-group:last-child { margin-bottom: 0; }
+  .rf-group-title {
+    font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 8px; padding-bottom: 5px;
+    border-bottom: 1px solid var(--border);
+  }
+  .rf-items { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+  .rf-items li {
+    font-size: 13px; color: var(--mid); line-height: 1.45;
+    padding-left: 16px; position: relative;
+  }
+  .rf-items li::before {
+    content: "›"; position: absolute; left: 0;
+    color: var(--blue); font-weight: 700; font-size: 15px; line-height: 1.2;
+  }
+  .rf-items li.sub {
+    padding-left: 28px; font-size: 12px; color: var(--muted);
+  }
+  .rf-items li.sub::before { content: "–"; left: 14px; color: var(--muted); font-size: 13px; }
+  .rf-badge {
+    display: inline-block; font-size: 10px; font-weight: 600; letter-spacing: 0.06em;
+    text-transform: uppercase; padding: 1px 6px; border-radius: 4px; margin-left: 5px;
+    vertical-align: middle;
+  }
+  .rf-badge.api  { background: rgba(14,116,144,0.1); color: #0e7490; border: 1px solid rgba(14,116,144,0.25); }
+  .rf-badge.int  { background: rgba(99,102,241,0.1); color: #4338ca; border: 1px solid rgba(99,102,241,0.25); }
+  .rf-badge.crm  { background: rgba(109,40,217,0.1); color: #6d28d9; border: 1px solid rgba(109,40,217,0.25); }
+
+  /* ── DEMAND CARDS ────────────────────────────────────────── */
+  .demands-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(340px, 1fr)); gap: 20px;
+  }
+  .demand-card {
+    background: var(--white); border: 1px solid var(--border);
+    border-radius: 12px; padding: 24px; position: relative;
+    transition: box-shadow 0.2s, transform 0.2s;
+    overflow: hidden;
+  }
+  .demand-card::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--blue) 0%, var(--blue-mid) 100%);
+  }
+  .demand-card:hover { box-shadow: 0 8px 32px rgba(26,63,163,0.12); transform: translateY(-2px); }
+
+  .demand-num {
+    font-size: 11px; font-weight: 700; letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--blue); margin-bottom: 8px; opacity: 0.7;
+  }
+  .demand-title {
+    font-family: var(--font-display);
+    font-size: 21px; font-weight: 700; line-height: 1.1;
+    color: var(--dark); margin-bottom: 16px;
+  }
+  .demand-items { list-style: none; display: flex; flex-direction: column; gap: 8px; }
+  .demand-items li {
+    font-size: 13.5px; color: var(--mid); line-height: 1.5;
+    padding-left: 16px; position: relative;
+  }
+  .demand-items li::before {
+    content: '›'; position: absolute; left: 0;
+    color: var(--blue); font-weight: 700; font-size: 16px; line-height: 1.2;
+  }
+  .tag {
+    display: inline-block;
+    background: rgba(26,63,163,0.08);
+    border: 1px solid rgba(26,63,163,0.2);
+    border-radius: 4px;
+    padding: 1px 7px; font-size: 11px; letter-spacing: 0.06em;
+    text-transform: uppercase; color: var(--blue); margin-left: 6px;
+    vertical-align: middle; font-weight: 600;
+  }
+  .tag.tbd {
+    background: rgba(148,163,184,0.1);
+    border-color: rgba(148,163,184,0.3);
+    color: var(--tbd);
+  }
+  .tag.green {
+    background: rgba(46,204,64,0.1);
+    border-color: rgba(46,204,64,0.3);
+    color: var(--green-dark);
+  }
+  .demand-footer {
+    margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border);
+  }
+  .dep-badge {
+    font-size: 11px; color: var(--muted); letter-spacing: 0.04em;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .dep-badge::before { content: '⇢'; color: var(--blue); }
+
+  /* ── TIMELINE ────────────────────────────────────────────── */
+  .timeline-wrap { background: var(--white); border-radius: 16px; border: 1px solid var(--border); padding: 40px 40px 16px; }
+  .timeline { position: relative; }
+  .timeline::before {
+    content: ''; position: absolute; left: 19px; top: 0; bottom: 0;
+    width: 2px; background: var(--border);
+  }
+  .timeline-item {
+    display: flex; gap: 28px; position: relative; padding-bottom: 36px;
+  }
+  .tl-node {
+    width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+    display: grid; place-items: center; position: relative; z-index: 1;
+    font-family: var(--font-display); font-size: 15px; font-weight: 700;
+  }
+  .tl-node.done   { background: #16a34a; color: white; }
+  .tl-node.active  { background: var(--blue); color: var(--white); box-shadow: 0 0 0 5px var(--blue-glow); }
+  .tl-node.pending { background: var(--off-white); border: 2px solid var(--border); color: var(--muted); }
+
+  .tl-content { flex: 1; padding-top: 7px; }
+  .tl-date {
+    font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 4px; font-weight: 600;
+  }
+  .tl-date.active  { color: var(--blue); }
+  .tl-date.pending { color: var(--muted); }
+  .tl-date.tbd     { color: var(--tbd); }
+
+  .tl-title {
+    font-family: var(--font-display); font-size: 20px; font-weight: 700;
+    line-height: 1.1; margin-bottom: 6px; color: var(--dark);
+  }
+  .tl-title.pending { color: var(--muted); }
+  .tl-desc { font-size: 13.5px; color: var(--muted); line-height: 1.6; max-width: 560px; }
+
+  .tl-status {
+    display: inline-flex; align-items: center; gap: 5px;
+    font-size: 11px; font-weight: 600; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 3px 10px; border-radius: 20px; margin-top: 10px;
+  }
+  .tl-status.done { background: rgba(34,197,94,0.1); color: #16a34a; border: 1px solid rgba(34,197,94,0.25); }
+  .tl-status.active  {
+    background: rgba(26,63,163,0.08); color: var(--blue);
+    border: 1px solid rgba(26,63,163,0.2);
+    animation: pulse 2s infinite;
+  }
+  .tl-status.pending {
+    background: rgba(245,158,11,0.08); color: var(--pending);
+    border: 1px solid rgba(245,158,11,0.2);
+  }
+  .tl-status.tbd {
+    background: rgba(148,163,184,0.1); color: var(--tbd);
+    border: 1px solid rgba(148,163,184,0.25);
+  }
+  .tl-status::before { content: '●'; font-size: 8px; }
+  .tl-note {
+    font-size: 12.5px; color: var(--blue); background: var(--blue-light);
+    border: 1px solid rgba(26,63,163,0.15); border-radius: 6px;
+    padding: 6px 12px; margin-top: 8px; margin-bottom: 4px; display: inline-block;
+  }
+  .tl-note strong { font-weight: 700; }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.55; }
+  }
+
+  /* ── FOOTER ──────────────────────────────────────────────── */
+  .footer-wrap {
+    background: var(--blue);
+    margin-top: 0;
+  }
+  footer {
+    padding: 32px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    max-width: 1200px; margin: 0 auto;
+    color: rgba(255,255,255,0.45); font-size: 12px; letter-spacing: 0.04em;
+  }
+  footer strong { color: rgba(255,255,255,0.8); }
+
+  /* ── RESPONSIVE ──────────────────────────────────────────── */
+  @media (max-width: 768px) {
+    header { padding: 0 20px; }
+    .hero { grid-template-columns: 1fr; padding: 52px 20px 48px; }
+    .hero-stats { flex-direction: row; }
+    .section-wrap { padding: 48px 20px; }
+    .demands-grid { grid-template-columns: 1fr; }
+    .timeline-wrap { padding: 24px 20px 4px; }
+    footer { flex-direction: column; gap: 8px; padding: 28px 20px; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo-group">
+    <a class="logo-decio" href="https://www.grupodecio.com.br/" >
+<img src="data:image/png;base64,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" alt="Grupo Decio" style="height:36px; filter: brightness(0) invert(1);">
+    </a>
+    <div class="divider-v"></div>
+    <span class="project-badge">Posto 360</span>
+  </div>
+  <div class="header-right">
+    <a class="btn-back" href="index.html">
+      <svg viewBox="0 0 16 16" fill="none"><path d="M10 4l-4 4 4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      Portal
+    </a>
+    <span>Planejamento de Projeto · 2025</span>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero-wrap">
+  <div class="hero">
+    <div>
+      <div class="hero-eyebrow">Roadmap do Produto</div>
+      <h1>POSTO<br><em>360°</em></h1>
+      <p class="hero-sub">
+        Visão integrada de todas as frentes de desenvolvimento para transformar a operação dos postos Décio — do abastecimento ao autoatendimento, do app gestor ao KingPosto Móvel.
+      </p>
+      <div class="collab-tag">
+        Parceria <span>Duofy</span> <span class="x">×</span> <span>Grupo Decio</span>
+      </div>
+    </div>
+    <div class="hero-stats">
+      <div class="stat-card">
+        <div class="stat-num green">6</div>
+        <div class="stat-label">Módulos</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">8</div>
+        <div class="stat-label">Etapas</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">3/07</div>
+        <div class="stat-label">Dev Planejado</div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="stripe"></div>
+
+<!-- DEMANDS -->
+<div class="section-wrap">
+  <div class="section-header">
+    <h2>DEMANDAS</h2>
+    <span class="count">6 prioridades · definidas em 12/06</span>
+  </div>
+
+  <div class="demands-grid">
+
+    <!-- P1 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 01</div>
+      <div class="demand-title">KingPosto Fixo – Cancelas</div>
+      <ul class="demand-items">
+        <li>Alçada para abertura de cancelas de entrada e saída</li>
+        <li>Registro obrigatório de placa e motivo de abertura</li>
+        <li>Parametrização de mensagens de justificativa (bonificação e cancela)</li>
+      </ul>
+    </div>
+
+    <!-- P2 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 02</div>
+      <div class="demand-title">KingPosto PDV Móvel</div>
+      <ul class="demand-items">
+        <li>Alçada/perfil para visualizar abastecimentos de todos os frentistas</li>
+      </ul>
+    </div>
+
+    <!-- P3 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 03</div>
+      <div class="demand-title">Orçamento Eletrônico</div>
+      <ul class="demand-items">
+        <li><strong>Troca de Óleo:</strong> vínculo de vendas à placa, lançamento de produtos, produtos a granel, cadastro de clientes, histórico por placa <span class="tag tbd">Futuro</span></li>
+        <li><strong>Posto:</strong> vínculo da placa ao abastecimento, classificação de veículos, histórico de abastecimentos por placa</li>
+      </ul>
+      <div class="demand-footer">
+        <span class="dep-badge">Predecessora do Totem (Prioridade 04)</span>
+      </div>
+    </div>
+
+    <!-- P4 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 04</div>
+      <div class="demand-title">Totem de Autoatendimento</div>
+      <ul class="demand-items">
+        <li>Visualização dos orçamentos vinculados à placa</li>
+        <li>Pagamento dos lançamentos do Orçamento do Posto via totem</li>
+        <li>Pagamento dos lançamentos da Troca de Óleo via totem</li>
+      </ul>
+      <div class="demand-footer">
+        <span class="dep-badge">Depende da Prioridade 03 (Orçamento Eletrônico)</span>
+      </div>
+    </div>
+
+    <!-- P5 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 05</div>
+      <div class="demand-title">KingPosto Fixo – Orçamentos</div>
+      <ul class="demand-items">
+        <li>Bloqueio de finalização quando houver orçamentos pendentes na placa</li>
+        <li>Exigência de senha/alçada para exclusão de orçamentos não aproveitados</li>
+        <li>Apresentar orçamentos pendentes ao consultar placa automaticamente</li>
+      </ul>
+    </div>
+
+    <!-- P6 -->
+    <div class="demand-card">
+      <div class="demand-num">Prioridade 06</div>
+      <div class="demand-title">App do Gestor – Cancelas</div>
+      <ul class="demand-items">
+        <li>Visualização de veículos no pátio via API da cancela + histórico por placa</li>
+        <li>Ações remotas sobre cancelas: abertura, abono, justificativa obrigatória, alçada, motivos parametrizáveis <span class="tag tbd">Levantar</span></li>
+      </ul>
+    </div>
+
+  </div>
+</div>
+
+<!-- REQUISITOS FUNCIONAIS -->
+<div class="section-wrap" style="padding-top: 0;">
+  <div class="section-header">
+    <h2>REQUISITOS FUNCIONAIS</h2>
+    <span class="count">Levantamento detalhado · 17–19 de Junho</span>
+  </div>
+
+  <div class="rf-grid">
+
+    <!-- RF1: Cancelas -->
+    <div class="rf-card">
+      <div class="rf-card-header">
+        <div class="rf-icon">🚧</div>
+        <div>
+          <div class="rf-card-title">Cancelas – KingPosto Fixo</div>
+          <div class="rf-card-sub">Prioridade 01</div>
+        </div>
+      </div>
+      <div class="rf-body">
+        <div class="rf-group">
+          <div class="rf-group-title">Interface &amp; UX</div>
+          <ul class="rf-items">
+            <li>Tela da cancela deve ser similar à tela do Banho, exibindo mensagens dinâmicas de acordo com o retorno da API</li>
+            <li>Reimpressão de ticket de estacionamento disponível no PDV Fixo</li>
+          </ul>
+        </div>
+        <div class="rf-group">
+          <div class="rf-group-title">Integrações &amp; Fiscal</div>
+          <ul class="rf-items">
+            <li>Gravação de log de todas as aprovações de alçadas <span class="rf-badge int">Protheus</span></li>
+            <li>Emissão de Nota Fiscal de Serviço (NFS-e) no PDV Móvel</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RF2: PDV Móvel Diesel -->
+    <div class="rf-card">
+      <div class="rf-card-header teal">
+        <div class="rf-icon">⛽</div>
+        <div>
+          <div class="rf-card-title">PDV Móvel – Pista Diesel</div>
+          <div class="rf-card-sub">Prioridade 02</div>
+        </div>
+      </div>
+      <div class="rf-body">
+        <div class="rf-group">
+          <div class="rf-group-title">Descontos</div>
+          <ul class="rf-items">
+            <li>Respeitar o desconto definido no App Gestor, por meio do processo de importação de orçamento <span class="rf-badge int">P5</span></li>
+            <li>Permitir aplicação de desconto manual pelo operador no PDV Móvel</li>
+          </ul>
+        </div>
+        <div class="rf-group">
+          <div class="rf-group-title">Usabilidade</div>
+          <ul class="rf-items">
+            <li>Destacar visualmente e induzir o operador à digitação da placa e do CPF durante o fluxo de abastecimento</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RF3: Orçamento Eletrônico - ocupa linha inteira -->
+    <div class="rf-card" style="grid-column: 1 / -1;">
+      <div class="rf-card-header green">
+        <div class="rf-icon">📋</div>
+        <div>
+          <div class="rf-card-title">Orçamento Eletrônico – Jornada Completa</div>
+          <div class="rf-card-sub">Prioridade 03 · PDV Móvel &amp; PDV Fixo</div>
+        </div>
+      </div>
+      <div class="rf-body" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">Listagem de Abastecimentos (PDV Móvel)</div>
+            <ul class="rf-items">
+              <li>Exibir ícones de bicos na listagem de abastecimentos</li>
+              <li>Abastecimentos com orçamento já vinculado não devem aparecer na listagem</li>
+              <li>Controle de semáforo para destacar abastecimentos antigos (por tempo)</li>
+              <li>Seleção do abastecimento realiza amarração da placa ao orçamento</li>
+              <li class="sub">Sempre vincular à placa principal</li>
+              <li class="sub">Se placa secundária: exibir seletor e habilitar campo para vincular a placa principal também</li>
+              <li>Seleção do tipo de veículo</li>
+              <li>Registro de KM e leitura de odômetro</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Seleção de Produtos</div>
+            <ul class="rf-items">
+              <li>Operador pode selecionar produtos a serem adicionados ao orçamento</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">Dados Obrigatórios – Troca de Óleo</div>
+            <ul class="rf-items">
+              <li>Nome do motorista</li>
+              <li>Nome da empresa</li>
+              <li>Telefone do motorista</li>
+              <li>Telefone da empresa</li>
+              <li>CPF ou CNPJ do motorista</li>
+              <li>Data de nascimento do motorista</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Encerramento do Atendimento</div>
+            <ul class="rf-items">
+              <li>Não permite aplicação de desconto no orçamento</li>
+              <li>Forma de pagamento desabilitada durante o orçamento</li>
+              <li>Aba de visualização de orçamentos em aberto com possibilidade de exclusão (interface discreta, não destacada)</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">PDV Fixo – Controles</div>
+            <ul class="rf-items">
+              <li>Controle de semáforo de tempo de abastecimento na tela do PDV Fixo</li>
+              <li>Nova coluna na grid de abastecimentos indicando a presença de orçamentos vinculados</li>
+              <li class="sub">Ao marcar um abastecimento: validar orçamento vinculado e abrir tela de seleção para seguir a jornada de fechamento da venda</li>
+              <li>Destaque no campo de digitação da placa para importação de orçamentos e continuidade do fluxo de venda</li>
+              <li>Possibilidade de realizar orçamento de produtos diretamente no PDV</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- RF4: Totem -->
+    <div class="rf-card">
+      <div class="rf-card-header indigo">
+        <div class="rf-icon">🖥️</div>
+        <div>
+          <div class="rf-card-title">Totem de Pagamento</div>
+          <div class="rf-card-sub">Prioridade 04</div>
+        </div>
+      </div>
+      <div class="rf-body">
+        <div class="rf-group">
+          <div class="rf-group-title">Funcionalidades</div>
+          <ul class="rf-items">
+            <li>Venda de produtos diretamente pelo totem</li>
+            <li>Pagamento de orçamentos vinculados à placa (Posto e Troca de Óleo)</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- RF5: App Gestor + Pátio -->
+    <div class="rf-card" style="grid-column: 1 / -1;">
+      <div class="rf-card-header violet">
+        <div class="rf-icon">📱</div>
+        <div>
+          <div class="rf-card-title">App Gestor – Pátio, Abordagem &amp; CRM</div>
+          <div class="rf-card-sub">Prioridade 06 · API DENATRAN · API Decio</div>
+        </div>
+      </div>
+      <div class="rf-body" style="display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px;">
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">Totalizadores (Cards)</div>
+            <ul class="rf-items">
+              <li>Total de veículos no pátio</li>
+              <li>Total de veículos clientes no pátio</li>
+              <li>Total de veículos não-clientes no pátio</li>
+              <li>Total de veículos sem abordagem</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Visualização do Pátio <span class="rf-badge api">DENATRAN</span></div>
+            <ul class="rf-items">
+              <li>Placa do veículo</li>
+              <li>Modelo do veículo</li>
+              <li>Nome do proprietário</li>
+              <li>Indicador: é cliente? (ícone) — baseado em regra de negócio <span class="rf-badge api">API Decio</span></li>
+              <li class="sub">Clientes: regra de negócio via API Decio</li>
+              <li class="sub">Não-clientes: 3 últimas vendas via API Decio</li>
+              <li>Indicador: abordado? (Sim / Não)</li>
+              <li>Indicador: possui orçamento? (Sim / Não)</li>
+              <li>Botão para iniciar abordagem direto da visualização do pátio</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">Fluxo de Abordagem</div>
+            <ul class="rf-items">
+              <li>Consulta de placa com retorno das 3 últimas vendas <span class="rf-badge api">API Decio</span></li>
+              <li>Registro de CPF e nome do motorista</li>
+              <li class="sub">Validação: se já abordado dentro da janela de dias configurada, bloquear continuação</li>
+              <li>Registro de telefone e telefone adicional</li>
+              <li>Registro de e-mail</li>
+              <li>Tipo de abordagem (validar com comercial):</li>
+              <li class="sub">Negociação à vista</li>
+              <li class="sub">Solicitação de abertura de cadastro</li>
+              <li class="sub">Negociação de preço / evolução</li>
+              <li>Campo de observações finais</li>
+            </ul>
+          </div>
+        </div>
+
+        <div>
+          <div class="rf-group">
+            <div class="rf-group-title">Dashboard – App (DrillDown)</div>
+            <ul class="rf-items">
+              <li>Quantidade de veículos que passaram no pátio por período</li>
+              <li>Quantidade de veículos clientes que passaram no pátio por período</li>
+              <li>Quantidade de veículos não-clientes que passaram no pátio por período</li>
+              <li>Quantidade de veículos abordados no pátio por período</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Dashboard – CRM</div>
+            <ul class="rf-items">
+              <li>Todos os indicadores do Dashboard App, mais:</li>
+              <li>Quantidade de abordagens por pessoa</li>
+              <li>Quantidade de abordagens por unidade</li>
+              <li>Quantidade de veículos abordados que converteram em cliente</li>
+            </ul>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- PLANNING TIMELINE -->
+<div class="section-wrap" style="padding-top: 0;">
+  <div class="section-header">
+    <h2>PRÓXIMOS PASSOS</h2>
+    <span class="count">8 etapas · execução e go-live a definir</span>
+  </div>
+
+  <div class="timeline-wrap">
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="tl-node done">1</div>
+        <div class="tl-content">
+          <div class="tl-date active">12 de Junho</div>
+          <div class="tl-title">Definir Prioridades</div>
+          <div class="tl-desc">Alinhamento das prioridades entre os times Duofy e Decio para direcionar o levantamento detalhado dos módulos.</div>
+          <span class="tl-status done">Concluído</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node done">2</div>
+        <div class="tl-content">
+          <div class="tl-date done">17 a 19 de Junho</div>
+          <div class="tl-title">Agendas de Levantamento Detalhado</div>
+          <div class="tl-desc">Sessões de descoberta com as áreas de negócio para mapear requisitos funcionais e técnicos de cada módulo, incluindo os itens marcados como "Levantar".</div>
+          <div class="tl-note">📅 Próxima agenda: <strong>26 de Junho</strong></div>
+          <span class="tl-status active">Em Andamento</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">3</div>
+        <div class="tl-content">
+          <div class="tl-date pending">29 de Junho a 10 de Julho</div>
+          <div class="tl-title pending">Prototipação Interna</div>
+          <div class="tl-desc">Criação dos protótipos de alta fidelidade para os módulos priorizados, com revisão interna de UX antes da validação com o cliente.</div>
+          <span class="tl-status pending">Aguardando</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">4</div>
+        <div class="tl-content">
+          <div class="tl-date pending">07 de Julho</div>
+          <div class="tl-title pending">Validação do Protótipo</div>
+          <div class="tl-desc">Apresentação e aprovação dos protótipos com stakeholders do Grupo Decio. Ajustes finais antes do início do desenvolvimento.</div>
+          <span class="tl-status pending">Aguardando</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">5</div>
+        <div class="tl-content">
+          <div class="tl-date pending">10 de Julho</div>
+          <div class="tl-title pending">Planejamento de Desenvolvimento</div>
+          <div class="tl-desc">Definição de sprints, arquitetura técnica, dependências entre módulos e estimativas de esforço para cada entrega.</div>
+          <span class="tl-status pending">Aguardando</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">6</div>
+        <div class="tl-content">
+          <div class="tl-date tbd">A Definir</div>
+          <div class="tl-title pending">Execução do Desenvolvimento</div>
+          <div class="tl-desc">Início do desenvolvimento das funcionalidades conforme priorização e planejamento de sprints aprovados.</div>
+          <span class="tl-status tbd">A Definir</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">7</div>
+        <div class="tl-content">
+          <div class="tl-date tbd">A Definir</div>
+          <div class="tl-title pending">Validação – Time Decio</div>
+          <div class="tl-desc">Homologação interna pelo time técnico e operacional do Grupo Decio. Testes de aceitação em ambiente de staging.</div>
+          <span class="tl-status tbd">A Definir</span>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="tl-node pending">8</div>
+        <div class="tl-content">
+          <div class="tl-date tbd">A Definir</div>
+          <div class="tl-title pending">GO LIVE 🚀</div>
+          <div class="tl-desc">Lançamento em produção do Posto 360. Acompanhamento pós-implantação e suporte inicial à operação nos postos Decio.</div>
+          <span class="tl-status tbd">A Definir</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<div class="footer-wrap">
+  <footer>
+    <div>© 2026 <strong>Grupo Decio</strong> · Todos os direitos reservados</div>
+    <div>Projeto <strong>Posto 360</strong> · Duofy × Decio · Documento vivo sujeito a atualizações</div>
+  </footer>
+</div>
+
+</body>
+</html>
