@@ -687,6 +687,13 @@
 
         <div>
           <div class="rf-group">
+            <div class="rf-group-title">Configuração de Unidade</div>
+            <ul class="rf-items">
+              <li>No cadastro da unidade, definir se ela possui cancela</li>
+              <li class="sub">Se a unidade não possuir cancela, ocultar toda a seção de veículos no pátio</li>
+            </ul>
+          </div>
+          <div class="rf-group">
             <div class="rf-group-title">Totalizadores (Cards)</div>
             <ul class="rf-items">
               <li>Total de veículos no pátio</li>
@@ -707,24 +714,53 @@
               <li>Indicador: abordado? (Sim / Não)</li>
               <li>Indicador: possui orçamento? (Sim / Não)</li>
               <li>Botão para iniciar abordagem direto da visualização do pátio</li>
+              <li>Se veículo já abordado: indicar se a abordagem ocorreu nesta unidade ou em outra unidade</li>
             </ul>
           </div>
         </div>
 
         <div>
           <div class="rf-group">
-            <div class="rf-group-title">Fluxo de Abordagem</div>
+            <div class="rf-group-title">Fluxo de Abordagem – Consulta Inicial</div>
             <ul class="rf-items">
-              <li>Consulta de placa com retorno das 3 últimas vendas <span class="rf-badge api">API Decio</span></li>
+              <li>Opção de consulta por <strong>Placa</strong> ou <strong>CNPJ</strong></li>
               <li>Registro de CPF e nome do motorista</li>
               <li class="sub">Validação: se já abordado dentro da janela de dias configurada, bloquear continuação</li>
               <li>Registro de telefone e telefone adicional</li>
               <li>Registro de e-mail</li>
-              <li>Tipo de abordagem (validar com comercial):</li>
-              <li class="sub">Negociação à vista</li>
-              <li class="sub">Solicitação de abertura de cadastro</li>
-              <li class="sub">Negociação de preço / evolução</li>
               <li>Campo de observações finais</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Abordagem por Placa – Cliente <span class="rf-badge api">API Decio</span></div>
+            <ul class="rf-items">
+              <li>Assessor Comercial responsável pelo cliente</li>
+              <li class="sub">Criar campo no sistema para registrar o assessor</li>
+              <li class="sub">Preencher assessor na API de inclusão/alteração de clientes no Protheus <span class="rf-badge int">Time Decio</span></li>
+              <li>Histórico de pagamentos (Baixas Financeiras)</li>
+              <li>3 últimas vendas: Unidade · Data · Cliente · Combustível · Litragem · Preço Unit. · Preço Total · Frentista · Forma de Pagamento</li>
+              <li>Se cliente sem abastecimento:</li>
+              <li class="sub">Indicar que possui cadastro e assessor responsável</li>
+              <li class="sub">Consumo últimos 3 meses por combustível (todas as unidades)</li>
+              <li class="sub">Formas de pagamento utilizadas nos últimos 3 meses (forma + valor)</li>
+              <li class="sub">Detalhamento por unidade Decio: consumo + formas de pagamento</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Abordagem por CNPJ – Cliente <span class="rf-badge api">API Decio</span></div>
+            <ul class="rf-items">
+              <li>Indicar que possui cadastro e assessor responsável</li>
+              <li>Consumo últimos 3 meses por combustível (todas as unidades)</li>
+              <li>Formas de pagamento utilizadas nos últimos 3 meses (forma + valor)</li>
+              <li>Detalhamento por unidade Decio: consumo + formas de pagamento</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Campos por Tipo de Abordagem</div>
+            <ul class="rf-items">
+              <li><strong>Negociação à Vista:</strong> Volume negociado + Preço negociado</li>
+              <li><strong>Solicitação de Abertura de Cadastro:</strong> sem campos adicionais</li>
+              <li><strong>Negociação de Preço / Evolução:</strong> Forma de Pagamento</li>
             </ul>
           </div>
         </div>
@@ -746,6 +782,19 @@
               <li>Quantidade de abordagens por pessoa</li>
               <li>Quantidade de abordagens por unidade</li>
               <li>Quantidade de veículos abordados que converteram em cliente</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Integração CRM – Agendor <span class="rf-badge api">API Agendor</span></div>
+            <ul class="rf-items">
+              <li>Ao confirmar abordagem do tipo <em>Solicitação de Abertura de Cadastro</em> ou <em>Negociação de Preço/Evolução</em>: criar negócio no Agendor</li>
+              <li>Ao confirmar qualquer abordagem: disparar Workflow para o time de pré-vendas</li>
+            </ul>
+          </div>
+          <div class="rf-group">
+            <div class="rf-group-title">Aprovação de Preço</div>
+            <ul class="rf-items">
+              <li>Aprovação de atualização de preço a partir do envio do retaguarda (Time de Pricing)</li>
             </ul>
           </div>
         </div>
